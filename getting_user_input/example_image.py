@@ -14,7 +14,7 @@ def main(page: ft.Page):
     )
 
     img2 = ft.Image(
-        src=f"pecera.jpg",
+        src=f"/images/pecera.jpg",
         width=200,
         height=200,
         fit="contain"
