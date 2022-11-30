@@ -21,7 +21,7 @@ def main(page: ft.Page):
     )
     images = ft.Row(expand=1, wrap=False, scroll="always")
 
-    page.add(img2,img, images)
+    page.add(Text('Ejemplo de Carga de un Icono'),img,Text('Ejemplo de Carga de una Imagen Local'),img2,Text('Ejemplo de Carga de Imagenes en Internet'), images)
 
     for i in range(0, 30):
         images.controls.append(
