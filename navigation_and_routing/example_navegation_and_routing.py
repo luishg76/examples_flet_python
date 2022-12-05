@@ -1,47 +1,28 @@
 import flet
 from flet import AppBar, ElevatedButton, Page, Text, View, colors
-
+import views.view_root as vr
+import views.view_settings as vs
+import views.view_setting_emails as vse 
 
 def main(page: Page):
     page.title = "Routes Example"
 
     print("Initial route:", page.route)
 
+    dic_views={
+        "root":vr.view_root(page),
+        "settings":vs.view_setting(page),
+        "settings-mail":vse.view_setting_emails(page)
+    }
+    
     def route_change(e):
         print("Route change:", e.route)
         page.views.clear()
-        page.views.append(
-            View(
-                "/",
-                [
-                  AppBar(title=Text("Flet app"),bgcolor=colors.SURFACE_VARIANT),
-                  ElevatedButton("Go to settings", on_click=open_settings),
-                ],
-            )
-        )
+        page.views.append(dic_views["root"])                
         if page.route == "/settings" or page.route == "/settings/mail":
-            page.views.append(
-                View(
-                    "/settings",
-                    [
-                       AppBar(title=Text("Settings"), bgcolor=colors.SURFACE_VARIANT),
-                       Text("Settings!", style="bodyMedium"),
-                       ElevatedButton("Go to mail settings", on_click=open_mail_settings),
-                    ],
-                )
-            )
+            page.views.append(dic_views["settings"])
         if page.route == "/settings/mail":
-            page.views.append(
-                View(
-                    "/settings/mail",
-                    [
-                        AppBar(
-                            title=Text("Mail Settings"), bgcolor=colors.SURFACE_VARIANT
-                        ),
-                        Text("Mail settings!"),
-                    ],
-                )
-            )
+            page.views.append(dic_views["settings-mail"])
         page.update()
 
     def view_pop(e):
@@ -52,14 +33,6 @@ def main(page: Page):
 
     page.on_route_change = route_change
     page.on_view_pop = view_pop
-
-    def open_mail_settings(e):
-        page.go("/settings/mail")
-
-    def open_settings(e):
-        page.go("/settings")
-
     page.go(page.route)
 
-
-flet.app(target=main, view=flet.WEB_BROWSER)
+flet.app(target=main, view="web_browser")
